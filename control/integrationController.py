@@ -23,7 +23,11 @@ class IntegrationController:
         self.log = Log()    
         self.petitionsList = []
         self.petition = Petition()
-    
+
+    def pushPlipToTrelloBoard(self):
+        for p in Petition.select():   
+            self.trello.createCard(p)
+
     # downloads and store plips from google sheets on local repositoty
     def downloadPLIPFile(self):
         plipSheet = os.getenv("GOOGLE_SHEET_URL")
@@ -39,6 +43,7 @@ class IntegrationController:
         try:
             with open('plip-repo/plip.csv', 'wb') as f:  
                 f.write(datatowrite)
+            print("Arquivo baixado com sucesso!")
         except OSError as e:
             if e.errno != errno.EEXIST:
                 raise
@@ -97,6 +102,8 @@ class IntegrationController:
 
 #TODO
 #create method that pushes every entrie from database to trello boards
+
+
 
 
 

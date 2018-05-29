@@ -16,5 +16,4 @@ if __name__ == '__main__':
     #ITController.downloadPLIPFile()
     #ITController.store()
     #print("LastSync: ", ITController.log.recoverLastSync())
-    print(ITController.trello.getBoard())
-        
+    ITController.pushPlipToTrelloBoard()

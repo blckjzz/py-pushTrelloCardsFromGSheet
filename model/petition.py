@@ -36,4 +36,3 @@ class Petition(peewee.Model):
         except OSError as e:
             if e.errno != errno.EEXIST:
                 raise
-

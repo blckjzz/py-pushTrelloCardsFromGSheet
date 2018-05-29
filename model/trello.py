@@ -51,19 +51,30 @@ class Trello:
     #create a card into trello board
     def createCard(self, petition):
         url = "https://api.trello.com/1/cards"
+        print(petition.plip_name)
         #for petition in petitionList:
-        querystring = { "name": petition.petition_name ,
-                        "desc": "Texto do Projeto de Lei: " + petition.petition_text 
-                        + "\nDados do Proponente: \n Nome: " 
-                                                            + petition.sender_name 
-                                                            + "\nE-mail:" 
-                                                            + petition.sender_mail
-                                                            + "\nPetição nacional?" 
-                                                            + petition.petition_is_nationWide 
-                                                            + "\nEstado/Cidade/Município:" 
-                                                            + petition.petition_municipality
-                                                            + datetime.datetime.fromtimestamp(petition.submitDate).strftime('%d/%m/%Y')
-,
+        querystring = { "name": petition.plip_name ,
+                        "desc":                              
+                                                            " DATA DE SUBMISSÃO DO PL: \n "
+                                                            + str(petition.submitDate)
+                                                            + "\n Texto do Projeto de Lei: \n " 
+                                                            + str(petition.plip_text)
+                                                            + " Dados do Proponente "
+                                                            + "\n ================= \n"
+                                                            + "\n Nome: "
+                                                            + str(petition.sender_name)
+                                                            + "\n E-mail: " 
+                                                            + str(petition.sender_email)
+                                                            + "\n Abrangencia: " 
+                                                            + str(petition.plip_wide)
+                                                            + "\n Estado/Cidade/Município:" 
+                                                            + "\n Estado: "
+                                                            + str(petition.plip_state)
+                                                            + "\n Cidade: "
+                                                            + str(petition.plip_municipality)
+                                                            + "\n Links: "
+                                                            + str(petition.plip_links)
+                                                            ,
                         "pos" : "bottom",
                         "idList": self.TRELLO_LIST_ID,
                         "urlSource" : "",
@@ -71,6 +82,9 @@ class Trello:
                         "key" : self.TRELLO_KEY,
                         "token" : self.TRELLO_TOKEN
                         }
-        #print(url + '' + str(querystring))
         r = requests.request("POST", url, params=querystring)
-        print("is the plip a card on trello ?: " + str(r.content))
+        if(r.status_code != 200):
+            print("no, something went wrog, must check.")
+            print("Status code: " + str(r.status_code))
+            
+ 
