@@ -1,5 +1,7 @@
 import peewee
 
+# TODO 
+# REMOVE DATABASE CALL THAT IS HARDCODED AND PLACE IN .ENV FILE
 db = peewee.SqliteDatabase('pl_import.db')
 
 class Log(peewee.Model):
