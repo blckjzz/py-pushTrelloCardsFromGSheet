@@ -59,34 +59,39 @@ class IntegrationController:
             plips = csv.reader(csvfile)
             #pt = Petition.select().where(Petition.submitDate > '2018-02-29 00:00:00').order_by(Petition.submitDate.desc()).limit(1)
             lastSync = self.log.recoverLastSync()
-            print("Last sync was in:", lastSync)
+            #print(lastSync)
+            #test = datetime.datetime.strptime(str(lastSync), '%Y-%m-%d %H:%M:%S')
+            print("Last sync was in: ", lastSync)
             for row in plips:
-                #print("teste:" + str(row[15]))
                 if(row[0] != 'status'):
                     timestamp = datetime.datetime.strptime(row[15],'%Y-%m-%d %H:%M:%S')
+                    print("debug timestamp:")
+                    print(type(timestamp))
+                    print("debug lastsync")
+                    print(type(lastSync))
                     if timestamp > lastSync:
                                 #print("última sincronização: ", lastSync)
                                 #print("Timestamp de envio da petição:", timestamp)
                                 #print("Timestamp de envio maior que a ultima sincronização.. salvando no banco:")
-                            petition = Petition(
-                                plip_status = row[0],
-                                plip_template = row[1],
-                                plip_fantasy_name = row[2],
-                                plip_name = row[3],
-                                plip_text = row[4],
-                                plip_wide = row[5],
-                                plip_state = row[6],
-                                plip_municipality = row[7],
-                                plip_video = row[8],
-                                plip_references = row[9],
-                                plip_links = row[10],
-                                sender_name = row[11],
-                                sender_email =row[12],
-                                sender_telephone =row[13],
-                                submitDate = row[15]
-                            )
-                            is_save = petition.save()
-                            petitionList.append(is_save)
+                        petition = Petition(
+                            plip_status = row[0],
+                            plip_template = row[1],
+                            plip_fantasy_name = row[2],
+                            plip_name = row[3],
+                            plip_text = row[4],
+                            plip_wide = row[5],
+                            plip_state = row[6],
+                            plip_municipality = row[7],
+                            plip_video = row[8],
+                            plip_references = row[9],
+                            plip_links = row[10],
+                            sender_name = row[11],
+                            sender_email =row[12],
+                            sender_telephone =row[13],
+                            submitDate = row[15]
+                        )
+                        is_save = petition.save()
+                        petitionList.append(is_save)
                     else:
                         print("Timestamp:")
                         print(timestamp)
