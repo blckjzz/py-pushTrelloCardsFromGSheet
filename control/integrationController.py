@@ -25,6 +25,7 @@ class IntegrationController:
         self.petition = Petition()
 
     def pushPlipToTrelloBoard(self):
+        #recover date from last Sync and displays it before accually syncs
         for p in Petition.select():   
             self.trello.createCard(p)
 
@@ -65,14 +66,14 @@ class IntegrationController:
             for row in plips:
                 if(row[0] != 'status'):
                     timestamp = datetime.datetime.strptime(row[15],'%Y-%m-%d %H:%M:%S')
-                    print("debug timestamp:")
-                    print(type(timestamp))
-                    print("debug lastsync")
-                    print(type(lastSync))
+                    #print("debug timestamp:")
+                    #print(type(timestamp))
+                    #print("debug lastsync")
+                    #print(type(lastSync))
                     if timestamp > lastSync:
-                                #print("última sincronização: ", lastSync)
-                                #print("Timestamp de envio da petição:", timestamp)
-                                #print("Timestamp de envio maior que a ultima sincronização.. salvando no banco:")
+                        print("última sincronização: "+ str(lastSync))
+                        print("Timestamp de envio da petição:" + str(timestamp))
+                        print("Timestamp de envio maior que a ultima sincronização.. salvando no banco:")
                         petition = Petition(
                             plip_status = row[0],
                             plip_template = row[1],
