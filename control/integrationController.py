@@ -26,8 +26,11 @@ class IntegrationController:
 
     def pushPlipToTrelloBoard(self):
         #recover date from last Sync and displays it before accually syncs
-        for p in Petition.select():   
-            self.trello.createCard(p)
+        lastSyncDate = self.log.recoverLastSync()
+        #for p in Petition.where(Petition.submitDate >= lastSyncDate).get():
+        for petition in Petition.select().where(Petition.submitDate >= Petition.submitDate):
+            print(petition.plip_name)
+            #self.trello.createCard(p)
 
     # downloads and store plips from google sheets on local repositoty
     def downloadPLIPFile(self):

@@ -16,6 +16,8 @@ if __name__ == '__main__':
             print('########### (1) DOWNLOAD PLIP FILES   ###########')
             print('=================================================')
             ITController.downloadPLIPFile()
+            ITController.store()
+
         elif option == '2':
             lastSyncDate = ITController.log.recoverLastSync()
             print('=================================================')
@@ -35,6 +37,17 @@ if __name__ == '__main__':
                 print("Sincronizada em: " + str(petition.submitDate) )
             print('=================================================')
 
+    def isSure(choise):
+        is_sure = raw_input("You have selected option [" + str(choise) + "], are you sure, press Y (Yes) or N (No):")
+        if is_sure == 'Y' or is_sure == 'y':
+            print("Cool, lets proceed")
+            return True
+        else:
+            return False
+    
+    def askValue():
+        choise  = raw_input("Select a Menu option: ")
+        return choise 
 
 
     def displayMenuOptions():
@@ -45,10 +58,10 @@ if __name__ == '__main__':
         print('(4) - List PLIPs from database')
         #print('(0) - Quit')
 
-        choise  = raw_input("Select a Menu option: ")
-        is_sure = raw_input("You have selected option [" + choise + "], are you sure, press Y (Yes) or N (No):")
-        if is_sure == 'Y' or is_sure == 'y':
-            print("Cool, lets proceed")
+        choise = askValue()
+        is_sure = isSure(choise)
+
+        if is_sure:
             # call menu  functions and execute code
             menu_functions(choise)
         else:
