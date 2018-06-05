@@ -72,7 +72,9 @@ if __name__ == '__main__':
     print('=================================================')
     
     while (True):
-        displayMenuOptions()
+        #displayMenuOptions()
+        print(ITController.trello.getListFromBoard())
+        break
 
 
         

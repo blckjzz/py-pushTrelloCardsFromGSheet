@@ -30,9 +30,22 @@ class Trello:
         cards = self.getBoardUrl + "cards?" + filter
         return cards
     
-    def getListsUrl(self, *filter):
-        cards = self.TRELLO_URL + "/lists/?" + filter
-        return cards
+    def getListFromBoard(self):
+
+        try:
+            url = "https://api.trello.com/1/boards/" + self.BOARD_ID + "/lists"
+
+            querystring = {"key": self.TRELLO_KEY ,"token": self.TRELLO_TOKEN}
+
+            r = requests.request("GET", url, params=querystring)
+            print(r.content)
+        except requests.exceptions.RequestException as e:
+            print("no, something went wrog, must check.")
+            print("Status code: " + str(r.status_code))
+            print e
+            sys.exit(1)
+
+
     
     ## transferd methods needs to fix
 
