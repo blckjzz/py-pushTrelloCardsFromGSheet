@@ -28,9 +28,11 @@ class IntegrationController:
         #recover date from last Sync and displays it before accually syncs
         lastSyncDate = self.log.recoverLastSync()
         #for p in Petition.where(Petition.submitDate >= lastSyncDate).get():
-        for petition in Petition.select().where(Petition.submitDate >= Petition.submitDate):
-            print(petition.plip_name)
-            #self.trello.createCard(p)
+        petitions = Petition.select().where(Petition.submitDate >= lastSyncDate)
+        #print(len(petitions))
+        for petition in petitions:
+            #print(petition.plip_name)
+            self.trello.createCard(petition)
 
     # downloads and store plips from google sheets on local repositoty
     def downloadPLIPFile(self):
@@ -61,18 +63,13 @@ class IntegrationController:
         petitionList = []
         with open('plip-repo/plip.csv', 'rb') as csvfile:
             plips = csv.reader(csvfile)
-            #pt = Petition.select().where(Petition.submitDate > '2018-02-29 00:00:00').order_by(Petition.submitDate.desc()).limit(1)
-            lastSync = self.log.recoverLastSync()
-            #print(lastSync)
-            #test = datetime.datetime.strptime(str(lastSync), '%Y-%m-%d %H:%M:%S')
-            print("Last sync was in: ", lastSync)
+    
+            lastSync = self.log.recoverLastSync()        
+            print("Last sync was in: " + str(lastSync))
             for row in plips:
                 if(row[0] != 'status'):
                     timestamp = datetime.datetime.strptime(row[15],'%Y-%m-%d %H:%M:%S')
-                    #print("debug timestamp:")
-                    #print(type(timestamp))
-                    #print("debug lastsync")
-                    #print(type(lastSync))
+    
                     if timestamp > lastSync:
                         print("última sincronização: "+ str(lastSync))
                         print("Timestamp de envio da petição:" + str(timestamp))

@@ -36,6 +36,11 @@ if __name__ == '__main__':
                 print("Última Petição salva: " + str(petition.plip_name))
                 print("Sincronizada em: " + str(petition.submitDate) )
             print('=================================================')
+        elif option == '5':
+            print('=================================================')
+            print('######### (5) TRELLO BOARD INFOS  ########')
+            print(ITController.trello.getListFromBoard())
+
 
     def isSure(choise):
         is_sure = raw_input("You have selected option [" + str(choise) + "], are you sure, press Y (Yes) or N (No):")
@@ -56,6 +61,7 @@ if __name__ == '__main__':
         print('(2) - Recover Last PLIP Sync Date')
         print('(3) - PUSH PLIP TO TRELLO BOARD')
         print('(4) - List PLIPs from database')
+        print('(5) - Infos about trello List and Board')
         #print('(0) - Quit')
 
         choise = askValue()
@@ -72,15 +78,4 @@ if __name__ == '__main__':
     print('=================================================')
     
     while (True):
-        #displayMenuOptions()
-        print(ITController.trello.getListFromBoard())
-        break
-
-
-        
-
-
-
-        
-    
-
+        displayMenuOptions()
