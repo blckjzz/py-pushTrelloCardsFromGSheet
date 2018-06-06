@@ -31,10 +31,16 @@ if __name__ == '__main__':
             print('=================================================')
         elif option == '4':
             print('=================================================')
-            print('######### (4) RECOVER LAST PLIP SYNCED  ########')
-            for petition in ITController.petition.select().order_by(Petition.submitDate.desc()).limit(1):
-                print("Última Petição salva: " + str(petition.plip_name))
-                print("Sincronizada em: " + str(petition.submitDate) )
+            print('######### (4) LIST SYNCED PLIPS  ########')
+            quantity = raw_input("Type [0] to show all plips OR Type amoumt of plips: ")   
+            if (quantity <= 0):
+                for petition in ITController.petition.select().order_by(Petition.submitDate.desc()).limit(quantity):
+                    print("Última Petição salva: " + str(petition.plip_name))
+                    print("Recebida em: " + str(petition.submitDate) )
+            else:
+                for petition in ITController.petition.select():
+                    print("Última Petição salva: " + str(petition.plip_name))
+                    print("Recebida em: " + str(petition.submitDate) )
             print('=================================================')
 
     def isSure(choise):

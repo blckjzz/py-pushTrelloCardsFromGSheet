@@ -26,12 +26,12 @@ class Trello:
     def getBoardUrl(self):
         return self.TRELLO_URL + self.BOARD_ID + "?&key=" + self.TRELLO_KEY + "&token=" + self.TRELLO_TOKEN
     
-    def getCardsUrl(self, *filter):
-        cards = self.getBoardUrl + "cards?" + filter
+    def getCardsUrl(self):
+        cards = self.TRELLO_URL + self.BOARD_ID +"/cards" + "?&key=" + self.TRELLO_KEY + "&token=" + self.TRELLO_TOKEN
         return cards
     
-    def getListsUrl(self, *filter):
-        cards = self.TRELLO_URL + "/lists/?" + filter
+    def getListsUrl(self):
+        cards = self.TRELLO_URL + self.BOARD_ID +"/lists/?&key=" + self.TRELLO_KEY + "&token=" + self.TRELLO_TOKEN
         return cards
     
     ## transferd methods needs to fix
