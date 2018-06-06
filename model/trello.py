@@ -50,41 +50,44 @@ class Trello:
     
     #create a card into trello board
     def createCard(self, petition):
-        url = "https://api.trello.com/1/cards"
-        print(petition.plip_name)
-        #for petition in petitionList:
-        querystring = { "name": petition.plip_name ,
-                        "desc":                              
-                                                            " DATA DE SUBMISSÃO DO PL: \n "
-                                                            + str(petition.submitDate)
-                                                            + "\n Texto do Projeto de Lei: \n " 
-                                                            + str(petition.plip_text)
-                                                            + " Dados do Proponente "
-                                                            + "\n ================= \n"
-                                                            + "\n Nome: "
-                                                            + str(petition.sender_name)
-                                                            + "\n E-mail: " 
-                                                            + str(petition.sender_email)
-                                                            + "\n Abrangencia: " 
-                                                            + str(petition.plip_wide)
-                                                            + "\n Estado/Cidade/Município:" 
-                                                            + "\n Estado: "
-                                                            + str(petition.plip_state)
-                                                            + "\n Cidade: "
-                                                            + str(petition.plip_municipality)
-                                                            + "\n Links: "
-                                                            + str(petition.plip_links)
-                                                            ,
-                        "pos" : "bottom",
-                        "idList": self.TRELLO_LIST_ID,
-                        "urlSource" : "",
-                        "keepFromSource" : "all",
-                        "key" : self.TRELLO_KEY,
-                        "token" : self.TRELLO_TOKEN
-                        }
-        r = requests.request("POST", url, params=querystring)
-        if(r.status_code != 200):
-            print("no, something went wrog, must check.")
-            print("Status code: " + str(r.status_code))
+        try:
+            url = "https://api.trello.com/1/cards"
+            #for petition in petitionList:
+            querystring = { "name": petition.plip_name ,
+                            "desc":                              
+                                                                " DATA DE SUBMISSÃO DO PL: \n "
+                                                                + str(petition.submitDate)
+                                                                + "\n Texto do Projeto de Lei: \n " 
+                                                                + str(petition.plip_text)
+                                                                + " Dados do Proponente "
+                                                                + "\n ================= \n"
+                                                                + "\n Nome: "
+                                                                + str(petition.sender_name)
+                                                                + "\n E-mail: " 
+                                                                + str(petition.sender_email)
+                                                                + "\n Abrangencia: " 
+                                                                + str(petition.plip_wide)
+                                                                + "\n Estado/Cidade/Município:" 
+                                                                + "\n Estado: "
+                                                                + str(petition.plip_state)
+                                                                + "\n Cidade: "
+                                                                + str(petition.plip_municipality)
+                                                                + "\n Links: "
+                                                                + str(petition.plip_links)
+                                                                ,
+                            "pos" : "bottom",
+                            "idList": self.TRELLO_LIST_ID,
+                            "urlSource" : "",
+                            "due" : petition.submitDate,
+                            "keepFromSource" : "all",
+                            "key" : self.TRELLO_KEY,
+                            "token" : self.TRELLO_TOKEN
+                            }
+            r = requests.request("POST", url, params=querystring)
+        except requests.exceptions.RequestException as e:  # This is the correct syntax
+            print e
+            #print("no, something went wrog, must check.")
+            #print("Status code: " + str(r.status_code))
+            sys.exit(1)
             
  

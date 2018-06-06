@@ -30,7 +30,7 @@ class IntegrationController:
         #for p in Petition.where(Petition.submitDate >= lastSyncDate).get():
         for petition in Petition.select().where(Petition.submitDate >= Petition.submitDate):
             print(petition.plip_name)
-            #self.trello.createCard(p)
+            self.trello.createCard(petition)
 
     # downloads and store plips from google sheets on local repositoty
     def downloadPLIPFile(self):
