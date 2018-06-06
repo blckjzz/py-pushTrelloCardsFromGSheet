@@ -33,6 +33,23 @@ class Trello:
     def getListsUrl(self):
         cards = self.TRELLO_URL + self.BOARD_ID +"/lists/?&key=" + self.TRELLO_KEY + "&token=" + self.TRELLO_TOKEN
         return cards
+
+    def getListFromBoard(self):
+
+        try:
+            url = "https://api.trello.com/1/boards/" + self.BOARD_ID + "/lists"
+
+            querystring = {"key": self.TRELLO_KEY ,"token": self.TRELLO_TOKEN}
+
+            r = requests.request("GET", url, params=querystring)
+            print(r.content)
+        except requests.exceptions.RequestException as e:
+            print("no, something went wrog, must check.")
+            print("Status code: " + str(r.status_code))
+            print e
+            sys.exit(1)
+
+
     
     ## transferd methods needs to fix
 
@@ -50,8 +67,10 @@ class Trello:
     
     #create a card into trello board
     def createCard(self, petition):
+        count = []
         try:
             url = "https://api.trello.com/1/cards"
+            print(petition.plip_name)
             #for petition in petitionList:
             querystring = { "name": petition.plip_name ,
                             "desc":                              
@@ -80,6 +99,7 @@ class Trello:
                             "urlSource" : "",
                             "due" : petition.submitDate,
                             "keepFromSource" : "all",
+                            "due" : petition.submitDate,
                             "key" : self.TRELLO_KEY,
                             "token" : self.TRELLO_TOKEN
                             }
