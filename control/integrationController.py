@@ -25,12 +25,21 @@ class IntegrationController:
         self.petition = Petition()
 
     def pushPlipToTrelloBoard(self):
+        log = Log()
         #recover date from last Sync and displays it before accually syncs
-        lastSyncDate = self.log.recoverLastSync()
+        lastSyncDate = self.log.recoverLastSync('PLIP_SYNC')
         #for p in Petition.where(Petition.submitDate >= lastSyncDate).get():
-        for petition in Petition.select().where(Petition.submitDate >= Petition.submitDate):
+        count = 0
+        for petition in Petition.select().where(Petition.submitDate >= lastSyncDate):
             print(petition.plip_name)
-            self.trello.createCard(petition)
+            count = self.trello.createCard(petition)
+        #if plip finishes now will create a log for it
+        now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        log.motive = "TRELLO_SYNC"
+        log.quantity = count
+        log.sync_date = now
+        self.log.createLogSyncPL(log.sync_date, log.quantity, log.motive)
+
 
     # downloads and store plips from google sheets on local repositoty
     def downloadPLIPFile(self):
@@ -62,7 +71,7 @@ class IntegrationController:
         with open('plip-repo/plip.csv', 'rb') as csvfile:
             plips = csv.reader(csvfile)
             #pt = Petition.select().where(Petition.submitDate > '2018-02-29 00:00:00').order_by(Petition.submitDate.desc()).limit(1)
-            lastSync = self.log.recoverLastSync()
+            lastSync = self.log.recoverLastSync('PLIP_SYNC')
             #print(lastSync)
             #test = datetime.datetime.strptime(str(lastSync), '%Y-%m-%d %H:%M:%S')
             print("Last sync was in: ", lastSync)
@@ -104,10 +113,10 @@ class IntegrationController:
         #create a log of the last petition Date that was synced
         if 'petition' in locals():
             if hasattr(petition, 'submitDate'):
-                self.log.createLogSyncPL(petition.submitDate,len(petitionList))
+                self.log.createLogSyncPL(petition.submitDate,len(petitionList), "PLIP_SYNC")
         else:
             #logs in case there is any new petition
-            self.log.createLogSyncPL(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),len(petitionList))
+            self.log.createLogSyncPL(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),len(petitionList), "PLIP_SYNC")
 
 #TODO
 #create method that pushes every entrie from database to trello boards

@@ -104,7 +104,7 @@ class Trello:
                             "token" : self.TRELLO_TOKEN
                             }
             r = requests.request("POST", url, params=querystring)
-            count += 1
+            return 1
         except requests.exceptions.RequestException as e:  # This is the correct syntax
             print e
             #print("no, something went wrog, must check.")

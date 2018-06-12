@@ -19,7 +19,7 @@ if __name__ == '__main__':
             ITController.store()
 
         elif option == '2':
-            lastSyncDate = ITController.log.recoverLastSync()
+            lastSyncDate = ITController.log.recoverLastSync('PLIP_SYNC')
             print('=================================================')
             print('######### (2) PLIP SYNC DATE  ########')
             print("Last sync were in: " + str(lastSyncDate))
