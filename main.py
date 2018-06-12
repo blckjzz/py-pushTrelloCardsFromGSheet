@@ -22,7 +22,7 @@ if __name__ == '__main__':
             lastSyncDate = ITController.log.recoverLastSync()
             print('=================================================')
             print('######### (2) PLIP SYNC DATE  ########')
-            print("Last sync was in: " + str(lastSyncDate))
+            print("Last sync were in: " + str(lastSyncDate))
             print('=================================================')
         elif option == '3':
             print('=================================================')
@@ -33,14 +33,20 @@ if __name__ == '__main__':
             print('=================================================')
             print('######### (4) LIST SYNCED PLIPS  ########')
             quantity = raw_input("Type [0] to show all plips OR Type amoumt of plips: ")   
-            if (quantity <= 0):
+            q = int(quantity)
+            print ("Quantity: " + quantity )
+            if int(quantity) < 1:
+                for petition in ITController.petition.select().order_by(Petition.submitDate.desc()):
+                    print("Id: " + str(petition.id))
+                    print("Última Petição salva: " + str(petition.plip_name))
+                    print("Recebida em: " + str(petition.submitDate) )
+                    print('=================================================')
+            else:               
                 for petition in ITController.petition.select().order_by(Petition.submitDate.desc()).limit(quantity):
-                    print("Última Petição salva: " + str(petition.plip_name))
+                    print("Id: " + str(petition.id))
+                    print("Nome do Projeto: " + str(petition.plip_name))
                     print("Recebida em: " + str(petition.submitDate) )
-            else:
-                for petition in ITController.petition.select():
-                    print("Última Petição salva: " + str(petition.plip_name))
-                    print("Recebida em: " + str(petition.submitDate) )
+                    print('=================================================')
             print('=================================================')
         elif option == '5':
             print('=================================================')

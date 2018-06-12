@@ -67,7 +67,7 @@ class Trello:
     
     #create a card into trello board
     def createCard(self, petition):
-        count = []
+        count = 0
         try:
             url = "https://api.trello.com/1/cards"
             print(petition.plip_name)
@@ -104,6 +104,7 @@ class Trello:
                             "token" : self.TRELLO_TOKEN
                             }
             r = requests.request("POST", url, params=querystring)
+            count += 1
         except requests.exceptions.RequestException as e:  # This is the correct syntax
             print e
             #print("no, something went wrog, must check.")
