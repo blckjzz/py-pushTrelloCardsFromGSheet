@@ -23,7 +23,32 @@ class IntegrationController:
         self.log = Log()    
         self.petitionsList = []
         self.petition = Petition()
+<<<<<<< HEAD
     
+=======
+
+    def pushPlipToTrelloBoard(self):
+        log = Log()
+        #recover date from last Sync and displays it before accually syncs
+        lastSyncDate = self.log.recoverLastSync('TRELLO_SYNC')
+        #for p in Petition.where(Petition.submitDate >= lastSyncDate).get():
+        count = 0
+        print("Last sync: " + str(lastSyncDate))
+
+        for petition in Petition.select().where(Petition.submitDate >= lastSyncDate):
+            print(petition.plip_name)
+            count += self.trello.createCard(petition)
+        print("Tototal of [" + str(count) +"] roposes pushed to Trello board")
+            
+        #if plip finishes now will create a log for it
+        now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        log.motive = "TRELLO_SYNC"
+        log.quantity = count
+        log.sync_date = now
+        self.log.createLogSyncPL(log.sync_date, log.quantity, log.motive)
+
+
+>>>>>>> development
     # downloads and store plips from google sheets on local repositoty
     def downloadPLIPFile(self):
         plipSheet = os.getenv("GOOGLE_SHEET_URL")
@@ -39,6 +64,10 @@ class IntegrationController:
         try:
             with open('plip-repo/plip.csv', 'wb') as f:  
                 f.write(datatowrite)
+<<<<<<< HEAD
+=======
+            print("Arquivo baixado com sucesso!")
+>>>>>>> development
         except OSError as e:
             if e.errno != errno.EEXIST:
                 raise
@@ -53,6 +82,7 @@ class IntegrationController:
         with open('plip-repo/plip.csv', 'rb') as csvfile:
             plips = csv.reader(csvfile)
             #pt = Petition.select().where(Petition.submitDate > '2018-02-29 00:00:00').order_by(Petition.submitDate.desc()).limit(1)
+<<<<<<< HEAD
             lastSync = self.log.recoverLastSync()
             print("Last sync was in:", lastSync)
             for row in plips:
@@ -82,6 +112,42 @@ class IntegrationController:
                             )
                             is_save = petition.save()
                             petitionList.append(is_save)
+=======
+            lastSync = self.log.recoverLastSync('PLIP_SYNC')
+            #print(lastSync)
+            #test = datetime.datetime.strptime(str(lastSync), '%Y-%m-%d %H:%M:%S')
+            print("Last sync was in: ", lastSync)
+            for row in plips:
+                if(row[0] != 'status'):
+                    timestamp = datetime.datetime.strptime(row[15],'%Y-%m-%d %H:%M:%S')
+                    #print("debug timestamp:")
+                    #print(type(timestamp))
+                    #print("debug lastsync")
+                    #print(type(lastSync))
+                    if timestamp > lastSync:
+                        print("última sincronização: "+ str(lastSync))
+                        print("Timestamp de envio da petição:" + str(timestamp))
+                        print("Timestamp de envio maior que a ultima sincronização.. salvando no banco:")
+                        petition = Petition(
+                            plip_status = row[0],
+                            plip_template = row[1],
+                            plip_fantasy_name = row[2],
+                            plip_name = row[3],
+                            plip_text = row[4],
+                            plip_wide = row[5],
+                            plip_state = row[6],
+                            plip_municipality = row[7],
+                            plip_video = row[8],
+                            plip_references = row[9],
+                            plip_links = row[10],
+                            sender_name = row[11],
+                            sender_email =row[12],
+                            sender_telephone =row[13],
+                            submitDate = row[15]
+                        )
+                        is_save = petition.save()
+                        petitionList.append(is_save)
+>>>>>>> development
                     else:
                         print("Timestamp:")
                         print(timestamp)
@@ -90,10 +156,17 @@ class IntegrationController:
         #create a log of the last petition Date that was synced
         if 'petition' in locals():
             if hasattr(petition, 'submitDate'):
+<<<<<<< HEAD
                 self.log.createLogSyncPL(petition.submitDate,len(petitionList))
         else:
             #logs in case there is any new petition
             self.log.createLogSyncPL(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),len(petitionList))
+=======
+                self.log.createLogSyncPL(petition.submitDate,len(petitionList), "PLIP_SYNC")
+        else:
+            #logs in case there is any new petition
+            self.log.createLogSyncPL(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),len(petitionList), "PLIP_SYNC")
+>>>>>>> development
 
 #TODO
 #create method that pushes every entrie from database to trello boards
@@ -101,3 +174,8 @@ class IntegrationController:
 
 
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> development

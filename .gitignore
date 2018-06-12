@@ -1,4 +1,8 @@
 *.pyc
 .env
 *.db
+<<<<<<< HEAD
+=======
+*.db*
+>>>>>>> development
 *.csv
