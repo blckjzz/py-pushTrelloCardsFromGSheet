@@ -21,8 +21,8 @@ class Log(peewee.Model):
     #recover lastsync property to help in the next syncronization from where its stops
     def recoverLastSync(self, motive):
         log = Log()
-        print(motive)
-        print type(motive)
+        #print(motive)
+        #print type(motive)
         #for log in Log.select().where(Log.motive == 'PLIP_SYNC'):
         log = Log.select().order_by(Log.sync_date.desc()).where(Log.motive == motive).get()
         return log.sync_date

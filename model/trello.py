@@ -70,11 +70,11 @@ class Trello:
         count = 0
         try:
             url = "https://api.trello.com/1/cards"
-            print(petition.plip_name)
+            #print(petition.plip_name)
             #for petition in petitionList:
             querystring = { "name": petition.plip_name ,
-                            "desc":                              
-                                                                " DATA DE SUBMISSÃO DO PL: \n "
+                            "desc":                             "Id do Projeto: " + str(petition.id) +
+                                                                " \nDATA DE SUBMISSÃO DO PL: \n "
                                                                 + str(petition.submitDate)
                                                                 + "\n Texto do Projeto de Lei: \n " 
                                                                 + str(petition.plip_text)

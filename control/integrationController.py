@@ -27,12 +27,16 @@ class IntegrationController:
     def pushPlipToTrelloBoard(self):
         log = Log()
         #recover date from last Sync and displays it before accually syncs
-        lastSyncDate = self.log.recoverLastSync('PLIP_SYNC')
+        lastSyncDate = self.log.recoverLastSync('TRELLO_SYNC')
         #for p in Petition.where(Petition.submitDate >= lastSyncDate).get():
         count = 0
+        print("Last sync: " + str(lastSyncDate))
+
         for petition in Petition.select().where(Petition.submitDate >= lastSyncDate):
             print(petition.plip_name)
-            count = self.trello.createCard(petition)
+            count += self.trello.createCard(petition)
+        print("Tototal of [" + str(count) +"] roposes pushed to Trello board")
+            
         #if plip finishes now will create a log for it
         now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         log.motive = "TRELLO_SYNC"

@@ -9,7 +9,6 @@ sys.setdefaultencoding('utf-8')
 if __name__ == '__main__':
     #loop = True
     ITController = IntegrationController()    
-    #print(ITController.trello.getBoard())
     def menu_functions(option):
         if option == '1':
             print('=================================================')
