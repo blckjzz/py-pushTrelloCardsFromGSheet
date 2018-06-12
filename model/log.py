@@ -7,6 +7,7 @@ db = peewee.SqliteDatabase('pl_import.db')
 class Log(peewee.Model):
     sync_date = peewee.DateTimeField()
     quantity = peewee.IntegerField()
+    motive = peewee.TextField()
 
 
     #creates a log event on database
