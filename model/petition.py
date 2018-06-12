@@ -7,12 +7,8 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 
-<<<<<<< HEAD
-
-=======
 # TODO 
 # REMOVE DATABASE CALL THAT IS HARDCODED AND PLACE IN .ENV FILE
->>>>>>> development
 db = peewee.SqliteDatabase('pl_import.db')
 
 class Petition(peewee.Model):
@@ -41,7 +37,3 @@ class Petition(peewee.Model):
         except OSError as e:
             if e.errno != errno.EEXIST:
                 raise
-<<<<<<< HEAD
-
-=======
->>>>>>> development

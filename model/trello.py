@@ -26,15 +26,6 @@ class Trello:
     def getBoardUrl(self):
         return self.TRELLO_URL + self.BOARD_ID + "?&key=" + self.TRELLO_KEY + "&token=" + self.TRELLO_TOKEN
     
-<<<<<<< HEAD
-    def getCardsUrl(self, *filter):
-        cards = self.getBoardUrl + "cards?" + filter
-        return cards
-    
-    def getListsUrl(self, *filter):
-        cards = self.TRELLO_URL + "/lists/?" + filter
-        return cards
-=======
     def getCardsUrl(self):
         cards = self.TRELLO_URL + self.BOARD_ID +"/cards" + "?&key=" + self.TRELLO_KEY + "&token=" + self.TRELLO_TOKEN
         return cards
@@ -59,7 +50,6 @@ class Trello:
             sys.exit(1)
 
 
->>>>>>> development
     
     ## transferd methods needs to fix
 
@@ -77,32 +67,6 @@ class Trello:
     
     #create a card into trello board
     def createCard(self, petition):
-<<<<<<< HEAD
-        url = "https://api.trello.com/1/cards"
-        #for petition in petitionList:
-        querystring = { "name": petition.petition_name ,
-                        "desc": "Texto do Projeto de Lei: " + petition.petition_text 
-                        + "\nDados do Proponente: \n Nome: " 
-                                                            + petition.sender_name 
-                                                            + "\nE-mail:" 
-                                                            + petition.sender_mail
-                                                            + "\nPetição nacional?" 
-                                                            + petition.petition_is_nationWide 
-                                                            + "\nEstado/Cidade/Município:" 
-                                                            + petition.petition_municipality
-                                                            + datetime.datetime.fromtimestamp(petition.submitDate).strftime('%d/%m/%Y')
-,
-                        "pos" : "bottom",
-                        "idList": self.TRELLO_LIST_ID,
-                        "urlSource" : "",
-                        "keepFromSource" : "all",
-                        "key" : self.TRELLO_KEY,
-                        "token" : self.TRELLO_TOKEN
-                        }
-        #print(url + '' + str(querystring))
-        r = requests.request("POST", url, params=querystring)
-        print("is the plip a card on trello ?: " + str(r.content))
-=======
         count = 0
         try:
             url = "https://api.trello.com/1/cards"
@@ -148,4 +112,3 @@ class Trello:
             sys.exit(1)
             
  
->>>>>>> development
